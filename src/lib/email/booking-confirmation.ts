@@ -1,10 +1,10 @@
 /**
- * Generates the booking confirmation email HTML using the official
- * Vercel email template (with dark mode, Outlook compat, branding).
+ * Generates the booking confirmation email HTML
+ * (with dark mode, Outlook compat, branding).
  */
 
 interface BookingConfirmationParams {
-  vercelAttendeeNames: string[]; // e.g. ["Guillermo Rauch", "Nick Bogaty"]
+  internalAttendeeNames: string[]; // e.g. ["Jane Smith", "John Doe"]
   dateTime: string; // pre-formatted, e.g. "Tuesday, June 30 at 2:00 PM (Los Angeles)"
   location?: string;
   attendeeLines?: string; // pre-formatted HTML lines for attendees
@@ -23,10 +23,10 @@ function escapeHtml(str: string): string {
 export function renderBookingConfirmationHtml(
   params: BookingConfirmationParams
 ): string {
-  const { vercelAttendeeNames, dateTime, location, attendeeLines, googleCalendarUrl, icsDownloadUrl } = params;
+  const { internalAttendeeNames, dateTime, location, attendeeLines, googleCalendarUrl, icsDownloadUrl } = params;
 
   // Build the opening line: "Your meeting with X and Y is confirmed."
-  const nameList = vercelAttendeeNames.map(escapeHtml);
+  const nameList = internalAttendeeNames.map(escapeHtml);
   let withClause: string;
   if (nameList.length === 0) {
     withClause = "Your meeting";
@@ -73,18 +73,20 @@ export function renderBookingConfirmationHtml(
     `&nbsp;`,
     `Thank you,`,
     `&nbsp;`,
-    `▲ The Vercel Team`,
+    `The ${process.env.APP_COMPANY_NAME || "Meeting Booking"} Team`,
   );
 
   const bodyHtml = bodyParts
     .map((line) => `<p style="margin: 0 0 0px 0;">${line}</p>`)
     .join("");
 
-  const previewText = vercelAttendeeNames.length > 0
-    ? `Meeting confirmed with ${vercelAttendeeNames.join(", ")} — ${escapeHtml(dateTime)}`
+  const previewText = internalAttendeeNames.length > 0
+    ? `Meeting confirmed with ${internalAttendeeNames.join(", ")} — ${escapeHtml(dateTime)}`
     : `Meeting confirmed — ${escapeHtml(dateTime)}`;
 
-  // The full template adapted from the official Vercel event email
+  const companyName = process.env.APP_COMPANY_NAME || "Meeting Booking";
+
+  // The full email template
   return `<!doctype html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head><title></title><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]--><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style type="text/css">#outlook a { padding:0; }
           table { border-spacing:0;}
@@ -144,7 +146,7 @@ export function renderBookingConfirmationHtml(
 <td style="vertical-align:top;width:600px;" ><![endif]--><div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:0px;vertical-align:top;" width="100%">
 <tr>
-<td class="img-container" style="font-size:0px;padding:48px 24px 8px 24px;word-break:break-word;text-align:center;"><div style="margin:0 auto;max-width:96px;"><a href="https://vercel.com" target="_blank" style="text-decoration: none; color: #0070F3;"><img alt height="auto" width="96" src="https://res.cloudinary.com/zeit-inc/image/upload/f_auto,q_auto/v1/email/vercel-circle" style="border:none;border-radius:0px;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;display:block;" class="light-mode-image"> <!--[if !mso]><!--><img alt height="auto" width="96" src="https://res.cloudinary.com/zeit-inc/image/upload/f_auto,q_auto/v1/email/vercel-circle-dark" style="border:none;border-radius:0px;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;display:none;" class="dark-mode-image"><!--<![endif]--></a></div>
+<td class="text-container" style="font-size:0px;padding:48px 24px 8px 24px;word-break:break-word;text-align:center;"><div style="font-family:'Geist', Arial, sans-serif;font-size:20px;font-weight:600;color:#000000;" class="dark-mode-color-A0A0A0">${escapeHtml(companyName)}</div>
 </td>
 </tr>
 <tr>
@@ -161,29 +163,7 @@ export function renderBookingConfirmationHtml(
 </td>
 </tr>
 <tr>
-<td class="social-container" style="font-size:0px;padding:4px 24px 4px 24px;word-break:break-word;text-align:center;"><!--[if mso | IE]>
-<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" >
-<tr>
-<td><![endif]--><div style="display:inline-block;">
-<table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="float:none;display:inline-table;">
-<tr>
-<td style="padding:8px;">
-<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-radius:0px;width:24px;">
-<tr>
-<td style="padding:0px;font-size:0;height:24px;vertical-align:middle;width:24px;"><a href="https://x.com/vercel" target="_blank" style="text-decoration: none; color: #0070F3;"><img alt="X" height="24" src="https://assets.vercel.com/image/upload/v1732879213/email/logo-x.png" style="border-radius:0px;display:block;" width="24"></a>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table></div><!--[if mso | IE]>
-</td>
-</tr>
-</table><![endif]-->
-</td>
-</tr>
-<tr>
-<td class="text-container" style="font-size:0px;padding:10px 10px 15px 10px;word-break:break-word;text-align:center;"><div class="links-454545"><div style="font-family:'Geist', Arial, sans-serif;font-size:12px;font-weight:400;letter-spacing:0.1px;line-height:1.4;text-align:center;mso-line-height-alt:1.063em;color:#454545;" class="dark-mode-color-8C8C8C dark-mode-link-color-8C8C8C"><p style="margin: 0 0 0px 0;"><span style="font-family: Geist, Arial, sans-serif;"><a href="https://vercel.com/contact" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Talk to a Vercel expert</a> &#8594;</span><br><span style="font-family: Geist, Arial, sans-serif;"><a href="https://vercel.com/docs" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Docs</a> | <a href="https://vercel.com/blog" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Blog</a> | <a href="https://vercel.com/contact" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Contact</a> | <a href="https://community.vercel.com" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Community</a> | <a href="https://vercel.com/careers" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Careers</a></span><br><span style="font-family: Geist, Arial, sans-serif;">440 N Barranca Ave #4133 Covina, CA 91723</span><br><span style="font-family: Geist, Arial, sans-serif;">Copyright &copy; 2026 Vercel Inc. All rights reserved.</span><br><span style="font-family: Geist, Arial, sans-serif;">View our <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener" style="color: rgb(69, 69, 69); text-decoration: none;">Privacy Policy</a>.</span></p></div></div>
+<td class="text-container" style="font-size:0px;padding:10px 10px 15px 10px;word-break:break-word;text-align:center;"><div class="links-454545"><div style="font-family:'Geist', Arial, sans-serif;font-size:12px;font-weight:400;letter-spacing:0.1px;line-height:1.4;text-align:center;mso-line-height-alt:1.063em;color:#454545;" class="dark-mode-color-8C8C8C dark-mode-link-color-8C8C8C"><p style="margin: 0 0 0px 0;"><span style="font-family: Geist, Arial, sans-serif;">Sent by ${escapeHtml(companyName)}</span></p></div></div>
 </td>
 </tr>
 </table></div><!--[if mso | IE]>

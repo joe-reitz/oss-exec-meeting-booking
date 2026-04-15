@@ -2,7 +2,7 @@
 
 Manual test scripts for verifying all critical flows in the exec-meeting-booking app. Each scenario includes preconditions, step-by-step actions, and expected results.
 
-**Base URL:** `http://localhost:3000` (or your Vercel deployment URL)
+**Base URL:** `http://localhost:3000` (or your production deployment URL)
 
 **Prerequisites:**
 - App running (`npm run dev`)

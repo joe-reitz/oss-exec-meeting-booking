@@ -6,7 +6,7 @@ This document outlines end-to-end testing scenarios for marketing stakeholders t
 
 ## Prerequisites
 
-- Access to the app at `exec-meeting-booking.vercel.sh` (Vercel team SSO)
+- Access to the deployed app (authenticated via your team's SSO provider)
 - A personal email you can receive calendar invites at (for testing external attendee flow)
 - Access to the Cal.com dashboard (for verifying event type setup)
 
@@ -122,7 +122,7 @@ This document outlines end-to-end testing scenarios for marketing stakeholders t
 | 9.1 | Toggle dark mode | Click the sun/moon icon in the header | App switches between light/dark mode. Preference persists on refresh. |
 | 9.2 | System preference | Set to "System" mode | Follows OS dark mode setting. |
 | 9.3 | Geist Pixel headlines | Look at page titles and section headers | Headlines use the pixel font (blocky/distinctive). |
-| 9.4 | Vercel logo | Check sidebar top-left | Vercel triangle, no box around it. |
+| 9.4 | App logo | Check sidebar top-left | Logo renders correctly, no box around it. |
 | 9.5 | Side panels have padding | Open any detail sheet (meeting, request) | Content has proper left padding, not hugging the edge. |
 
 ---
@@ -152,7 +152,7 @@ This document outlines end-to-end testing scenarios for marketing stakeholders t
 
 ## Known Limitations
 
-- **Scheduling Assistant**: Requires AI Gateway API key and correct URL (`https://ai-gateway.vercel.sh/v1`). May not work if these aren't configured.
+- **Scheduling Assistant**: Requires AI Gateway API key and correct URL. May not work if these aren't configured.
 - **Slack notifications**: Require mOperator API URL and key. Info Requested and prep reminders won't send Slack DMs without these.
 - **RSVP polling**: Runs every 5 minutes via cron. RSVP changes aren't instant.
 - **Goal recalculation**: Runs every hour via cron. Goal progress isn't real-time.

@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
  * Hit this URL in the browser to see if the gateway works.
  */
 export async function GET() {
-  const gatewayUrl = process.env.AI_GATEWAY_URL || "https://ai-gateway.vercel.sh";
+  const gatewayUrl = process.env.AI_GATEWAY_URL;
   const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
   const apiKey = process.env.AI_GATEWAY_API_KEY;
 

@@ -293,4 +293,4 @@ Three days before each meeting, the app sends a Slack DM to the assigned AE remi
 Cal.com is set up automatically when you create an event — you choose a meeting duration and the app handles the rest. Cal.com powers availability checking and sends calendar invites when meetings are booked.
 
 **Q: Who can see what?**
-Currently all logged-in users can see all events, meetings, and data. The app is scoped to your Vercel team — anyone with team access can view and edit.
+Currently all logged-in users can see all events, meetings, and data. The app is scoped to your team — anyone with team access can view and edit.

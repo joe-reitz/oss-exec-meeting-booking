@@ -50,7 +50,7 @@ export function generateIcs(params: IcsParams): string {
   const lines: string[] = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Vercel//Meeting Booking//EN",
+    "PRODID:-//Exec Meeting Booking//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:REQUEST",
     "BEGIN:VEVENT",

@@ -111,7 +111,7 @@ interface EventOption {
 // ─── Color constants ─────────────────────────────────────────────────
 
 const PIPELINE_COLORS = [
-  "#0070f3", // Vercel blue
+  "#0070f3", // blue
   "#7928ca", // purple
   "#ff0080", // pink
   "#f5a623", // amber

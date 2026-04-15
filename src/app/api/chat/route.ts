@@ -2,7 +2,7 @@ import { streamText, stepCountIs } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { schedulingTools } from "@/lib/ai/scheduling-agent";
 
-const gatewayUrl = process.env.AI_GATEWAY_URL || "https://ai-gateway.vercel.sh";
+const gatewayUrl = process.env.AI_GATEWAY_URL;
 const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
 
 const gateway = createOpenAI({
@@ -10,7 +10,7 @@ const gateway = createOpenAI({
   apiKey: process.env.AI_GATEWAY_API_KEY,
 });
 
-const SYSTEM_PROMPT = `You are a helpful scheduling assistant for Vercel's marketing team. You help find availability and book meetings between Vercel executives/AEs and external contacts at conferences and events.
+const SYSTEM_PROMPT = `You are a helpful scheduling assistant. You help find availability and book meetings between executives/AEs and external contacts at conferences and events.
 
 Key capabilities:
 - Look up executives and account executives by name

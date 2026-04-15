@@ -28,7 +28,7 @@ interface SendBookingEmailParams {
 
 // ─── Helpers ────────────────────────────────────────────────────────
 
-/** Title-case a name: "joe reitz" → "Joe Reitz", preserves acronyms like "CEO" */
+/** Title-case a name: "jane smith" → "Jane Smith", preserves acronyms like "CEO" */
 function titleCase(str: string): string {
   return str.replace(
     /\b\w+/g,
@@ -84,8 +84,8 @@ export async function sendBookingConfirmationEmail(
     company: a.company ? titleCase(a.company) : undefined,
   }));
 
-  // Vercel attendee names for the opening line
-  const vercelAttendeeNames = tcInternal.map((a) => a.name);
+  // Internal attendee names for the opening line
+  const internalAttendeeNames = tcInternal.map((a) => a.name);
 
   // Build attendee lines for the template
   const attendeeNames = [
@@ -136,9 +136,9 @@ export async function sendBookingConfirmationEmail(
   });
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?${gcalParams.toString()}`;
 
-  // Render HTML from the Vercel template
+  // Render HTML from the email template
   const html = renderBookingConfirmationHtml({
-    vercelAttendeeNames,
+    internalAttendeeNames,
     dateTime,
     location,
     attendeeLines,
@@ -152,9 +152,9 @@ export async function sendBookingConfirmationEmail(
 
   const icsBase64 = Buffer.from(icsContent).toString("base64");
 
-  const vercelNames = vercelAttendeeNames.join(" & ");
-  const subject = vercelNames
-    ? `Meeting Confirmed with ${vercelNames}`
+  const internalNames = internalAttendeeNames.join(" & ");
+  const subject = internalNames
+    ? `Meeting Confirmed with ${internalNames}`
     : `Meeting Confirmed: ${meetingTitle}`;
 
   await sgMail.send({

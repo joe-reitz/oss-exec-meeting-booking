@@ -930,7 +930,7 @@ export default function HelpPage() {
               </FaqItem>
               <FaqItem question="Who can see what?">
                 All logged-in users can see all events, meetings, and data. The
-                app is scoped to your Vercel team — anyone with team access can
+                app is scoped to your team — anyone with access can
                 view and edit.
               </FaqItem>
             </CardContent>

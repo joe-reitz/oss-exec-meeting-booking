@@ -5,7 +5,7 @@ import { recalculateAllGoals } from "@/lib/goals/calculator";
  * POST /api/cron/recalculate-goals
  *
  * Cron job that recalculates all active goals.
- * Intended to be called every hour via Vercel Cron.
+ * Intended to be called every hour via a cron scheduler (e.g., Vercel Cron).
  *
  * Requires CRON_SECRET in the Authorization header.
  */

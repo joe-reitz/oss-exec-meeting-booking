@@ -1,11 +1,11 @@
 /**
  * Seed marketing users into the users table.
  *
- * Usage:
- *   DATABASE_URL=<neon-url> node scripts/seed-marketing-users.mjs
+ * These users will be able to approve/reject meeting requests.
+ * Edit the list below with your team's names and emails.
  *
- * Or if .env.local has DATABASE_URL:
- *   npx dotenv -e .env.local -- node scripts/seed-marketing-users.mjs
+ * Usage:
+ *   DATABASE_URL=<your-neon-url> node scripts/seed-marketing-users.mjs
  */
 
 import { neon } from "@neondatabase/serverless";
@@ -18,23 +18,10 @@ if (!DATABASE_URL) {
 
 const sql = neon(DATABASE_URL);
 
+// Replace these with your team's actual names and Google Workspace emails
 const marketingUsers = [
-  { name: "Helana Zhang", email: "helana.zhang@vercel.com" },
-  { name: "Cheryl Wolf", email: "cheryl.wolf@vercel.com" },
-  { name: "Ria Parwal", email: "ria.parwal@vercel.com" },
-  { name: "Joe Reitz", email: "joe.reitz@vercel.com" },
-  { name: "Aarushi Sawnhey", email: "aarushi.sawnhey@vercel.com" },
-  { name: "Aisha Rahman", email: "aisha.raman@vercel.com" },
-  { name: "Alexander Roth", email: "alexander.roth@vercel.com" },
-  { name: "Ali Karukas", email: "ali.karukas@vercel.com" },
-  { name: "Alli Pope", email: "alli.pope@vercel.com" },
-  { name: "Caroline Ciaramitaro", email: "caroline.ciaramitaro@vercel.com" },
-  { name: "Hannah Cordner", email: "hannah.cordner@vercel.com" },
-  { name: "Lani Beadle", email: "lani.beadle@vercel.com" },
-  { name: "Madison McIlwain", email: "madison.mcilwain@vercel.com" },
-  { name: "Meghan Shaefer", email: "meghan.schaefer@vercel.com" },
-  { name: "Sharon Toh", email: "sharon.toh@vercel.com" },
-  { name: "Taylor Reeves", email: "taylor.reeves@vercel.com" },
+  { name: "Admin User", email: "admin@example.com" },
+  { name: "Marketing Lead", email: "marketing@example.com" },
 ];
 
 async function main() {

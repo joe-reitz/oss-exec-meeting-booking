@@ -8,7 +8,7 @@ import { sql } from "drizzle-orm";
  * POST /api/cron/sync-opportunities
  *
  * Cron job that syncs opportunities from the d0 API into the local database.
- * Intended to be called every 2 hours via Vercel Cron.
+ * Intended to be called every 2 hours via a cron scheduler (e.g., Vercel Cron).
  *
  * Requires CRON_SECRET in the Authorization header.
  */

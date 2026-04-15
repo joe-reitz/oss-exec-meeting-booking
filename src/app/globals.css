@@ -69,7 +69,7 @@
   --border: #e5e5e5;
   --input: #e5e5e5;
   --ring: #a3a3a3;
-  /* Vercel chart palette */
+  /* Chart palette */
   --chart-1: #0070f3;
   --chart-2: #00a878;
   --chart-3: #7928ca;
@@ -106,7 +106,7 @@
   --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.15);
   --ring: #525252;
-  /* Vercel chart palette (dark-adjusted) */
+  /* Chart palette (dark-adjusted) */
   --chart-1: #0070f3;
   --chart-2: #00a878;
   --chart-3: #7928ca;

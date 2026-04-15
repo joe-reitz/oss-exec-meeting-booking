@@ -1,17 +1,18 @@
 import { readFileSync } from "fs";
 
-const CSV_PATH = "/Users/joereitz/Downloads/moperator-export-2026-03-18.csv";
-const API_BASE = "http://localhost:3000";
+const CSV_PATH = process.argv[2];
+if (!CSV_PATH) {
+  console.error("Usage: node scripts/import-people.mjs <path-to-csv>");
+  process.exit(1);
+}
+const API_BASE = process.env.APP_URL || "http://localhost:3000";
 
+// Add any CRM system/service accounts to exclude here
 const EXCLUDED_NAMES = [
   "Account Marketplace",
   "Sales Queue",
   "Partnerships Queue",
   "CRM API User",
-  "Koala Admin",
-  "Tray Admin",
-  "Vercel Solvd",
-  "Vercel VDR Marketplace",
 ];
 
 function parseCsv(text) {

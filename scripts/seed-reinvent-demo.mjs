@@ -1,17 +1,16 @@
 /**
- * Seed script: AWS re:Invent 2025 Demo Event
+ * Seed script: Example Conference Demo Event
  *
- * Creates a realistic demo event with rooms, meetings, people, and pipeline
- * data so stakeholders can visualize the dashboard.
+ * Creates a demo event with rooms, meetings, people, and pipeline
+ * data so you can visualize the dashboard.
  *
  * Usage:
- *   node scripts/seed-reinvent-demo.mjs
+ *   APP_URL=http://localhost:3000 node scripts/seed-reinvent-demo.mjs
  *
  * Requires:
- *   - App running at APP_URL (default: https://exec-meeting-booking.vercel.sh)
- *   - Or set APP_URL env var to point to local/preview deployment
+ *   - App running at APP_URL
  *
- * To clean up: delete the "AWS re:Invent 2025" event from the Events page.
+ * To clean up: delete the "Tech Summit 2025" event from the Events page.
  */
 
 const APP_URL =
@@ -36,18 +35,18 @@ async function api(path, options = {}) {
 // ── Demo Data ───────────────────────────────────────────────────────
 
 const EXECS = [
-  { name: "Guillermo Rauch", email: "guillermo@vercel.com", type: "exec", title: "CEO" },
-  { name: "Jeanne Grosser", email: "jeanne@vercel.com", type: "exec", title: "CRO" },
-  { name: "Shu Ding", email: "shu@vercel.com", type: "exec", title: "VP of Engineering" },
+  { name: "Jane Smith", email: "jane.smith@example.com", type: "exec", title: "CEO" },
+  { name: "Tom Johnson", email: "tom.johnson@example.com", type: "exec", title: "CRO" },
+  { name: "Maria Garcia", email: "maria.garcia@example.com", type: "exec", title: "VP of Engineering" },
 ];
 
 const AES = [
-  { name: "Joe Reitz", email: "joe.reitz@vercel.com", type: "ae", title: "Marketing Ops" },
-  { name: "Sarah Chen", email: "sarah.chen@vercel.com", type: "ae", title: "Enterprise AE" },
-  { name: "Marcus Williams", email: "marcus.williams@vercel.com", type: "ae", title: "Enterprise AE" },
-  { name: "Emily Park", email: "emily.park@vercel.com", type: "ae", title: "Commercial AE" },
-  { name: "David Rodriguez", email: "david.rodriguez@vercel.com", type: "ae", title: "Commercial AE" },
-  { name: "Lisa Nguyen", email: "lisa.nguyen@vercel.com", type: "ae", title: "Mid-Market AE" },
+  { name: "Alex Taylor", email: "alex.taylor@example.com", type: "ae", title: "Marketing Ops" },
+  { name: "Sarah Chen", email: "sarah.chen@example.com", type: "ae", title: "Enterprise AE" },
+  { name: "Marcus Williams", email: "marcus.williams@example.com", type: "ae", title: "Enterprise AE" },
+  { name: "Emily Park", email: "emily.park@example.com", type: "ae", title: "Commercial AE" },
+  { name: "David Rodriguez", email: "david.rodriguez@example.com", type: "ae", title: "Commercial AE" },
+  { name: "Lisa Nguyen", email: "lisa.nguyen@example.com", type: "ae", title: "Mid-Market AE" },
 ];
 
 const ROOMS = [
@@ -72,7 +71,7 @@ const COMPANIES = [
   { name: "Notion", contact: "Ivan Zhao", email: "ivan@notion.so", title: "CEO", segment: "Majors" },
   { name: "Figma", contact: "Dylan Field", email: "dylan@figma.com", title: "CEO", segment: "Majors" },
   { name: "Linear", contact: "Karri Saarinen", email: "karri@linear.app", title: "CEO", segment: "Startups" },
-  { name: "Vercel Customer Corp", contact: "Jennifer Walsh", email: "jennifer@customercorp.com", title: "Director Eng", segment: "Commercial" },
+  { name: "Customer Corp", contact: "Jennifer Walsh", email: "jennifer@customercorp.com", title: "Director Eng", segment: "Commercial" },
   { name: "Acme Inc", contact: "Bob Smith", email: "bob@acme.com", title: "VP Platform", segment: "Commercial" },
   { name: "TechFlow", contact: "Diana Chen", email: "diana@techflow.io", title: "CTO", segment: "SMB" },
   { name: "CloudFirst", contact: "Ryan O'Brien", email: "ryan@cloudfirst.com", title: "VP Infrastructure", segment: "Commercial" },
@@ -116,7 +115,7 @@ function eventDate(dayOffset, hour, minute = 0) {
 // ── Main ────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log("🌱 Seeding AWS re:Invent 2025 demo data...\n");
+  console.log("🌱 Seeding demo event data...\n");
 
   // 1. Create execs and AEs (skip if email already exists)
   console.log("👥 Creating people...");
@@ -154,12 +153,12 @@ async function main() {
   const event = await api("/api/events", {
     method: "POST",
     body: JSON.stringify({
-      name: "AWS re:Invent 2025",
+      name: "Tech Summit 2025",
       description:
-        "Annual AWS conference — exec meeting program. Campaign ID: 701PZ00000cvCwEYAU",
-      location: "Las Vegas, NV",
-      startDate: "2025-12-01",
-      endDate: "2025-12-05",
+        "Annual tech conference — exec meeting program",
+      location: "San Francisco, CA",
+      startDate: "2025-10-15",
+      endDate: "2025-10-18",
       timezone: "America/Los_Angeles",
       color: "#f97316",
       isActive: true,
@@ -241,7 +240,7 @@ async function main() {
 
     seedOpps.push({
       id: oppId,
-      name: `${opp.company} — Vercel Enterprise`,
+      name: `${opp.company} — Enterprise`,
       accountName: opp.company,
       ownerName: ae.name,
       ownerId: ae.sfdcOwnerId || ae.id,
