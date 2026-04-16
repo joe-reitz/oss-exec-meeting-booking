@@ -2,16 +2,17 @@ import { streamText, stepCountIs } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 import { schedulingTools } from "@/lib/ai/scheduling-agent";
 
-const gatewayUrl = process.env.AI_GATEWAY_URL;
-if (!gatewayUrl) {
-  throw new Error("AI_GATEWAY_URL is not set");
+function getGateway() {
+  const gatewayUrl = process.env.AI_GATEWAY_URL;
+  if (!gatewayUrl) {
+    throw new Error("AI_GATEWAY_URL is not set");
+  }
+  const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
+  return createOpenAI({
+    baseURL,
+    apiKey: process.env.AI_GATEWAY_API_KEY,
+  });
 }
-const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
-
-const gateway = createOpenAI({
-  baseURL,
-  apiKey: process.env.AI_GATEWAY_API_KEY,
-});
 
 const SYSTEM_PROMPT = `You are a helpful scheduling assistant. You help find availability and book meetings between executives/AEs and external contacts at conferences and events.
 
@@ -58,6 +59,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const gateway = getGateway();
     const result = streamText({
       model: gateway("anthropic/claude-sonnet-4-20250514"),
       system: SYSTEM_PROMPT,
