@@ -6,12 +6,16 @@ import { NextResponse } from "next/server";
  */
 export async function GET() {
   const gatewayUrl = process.env.AI_GATEWAY_URL;
-  const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
   const apiKey = process.env.AI_GATEWAY_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json({ error: "AI_GATEWAY_API_KEY not set" });
   }
+  if (!gatewayUrl) {
+    return NextResponse.json({ error: "AI_GATEWAY_URL not set" });
+  }
+
+  const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
 
   try {
     const res = await fetch(`${baseURL}/chat/completions`, {
