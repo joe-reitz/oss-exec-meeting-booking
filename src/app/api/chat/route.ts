@@ -3,6 +3,9 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { schedulingTools } from "@/lib/ai/scheduling-agent";
 
 const gatewayUrl = process.env.AI_GATEWAY_URL;
+if (!gatewayUrl) {
+  throw new Error("AI_GATEWAY_URL is not set");
+}
 const baseURL = gatewayUrl.endsWith("/v1") ? gatewayUrl : `${gatewayUrl}/v1`;
 
 const gateway = createOpenAI({
